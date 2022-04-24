@@ -18,7 +18,7 @@ def get_profile_1(ORGID):
 
   soup = BeautifulSoup(html, 'lxml')
 
-  entry_list = {'Name':[],'ID':[],'Affiliation':[], 'Interests':[], 'Citations':[]}
+  entry_list = {'Name':[],'Web URL':[],'Affiliation':[], 'Interests':[], 'Citations':[]}
 
   for result in soup.select('.gs_ai_chpr'):
     name = result.select_one('.gs_ai_name a').text
@@ -32,7 +32,7 @@ def get_profile_1(ORGID):
     citations = result.select_one('.gs_ai_cby').text.split(' ')[2]
     
     entry_list['Name'].append(name)
-    entry_list['ID'].append('https://scholar.google.co.uk/citations?hl=en&user=' + gsID)
+    entry_list['Web URL'].append('https://scholar.google.co.uk/citations?hl=en&user=' + gsID)
     entry_list['Affiliation'].append(affiliations)
     entry_list['Interests'].append(interests)
     entry_list['Citations'].append(citations)
@@ -44,7 +44,7 @@ def get_profile_2(ORGID, next_link, page_index):
   html = requests.get(f'https://scholar.google.com/citations?view_op=view_org&hl=en&org={ORGID}&after_author={next_link}&astart={page_index}', headers=headers, proxies=proxies).text
   soup = BeautifulSoup(html, 'lxml')
 
-  entry_list = {'Name':[],'ID':[],'Affiliation':[], 'Interests':[], 'Citations':[]}
+  entry_list = {'Name':[],'Web URL':[],'Affiliation':[], 'Interests':[], 'Citations':[]}
 
   for result in soup.select('.gs_ai_chpr'):
     name = result.select_one('.gs_ai_name a').text
@@ -58,7 +58,7 @@ def get_profile_2(ORGID, next_link, page_index):
     citations = result.select_one('.gs_ai_cby').text.split(' ')[2]
     
     entry_list['Name'].append(name)
-    entry_list['ID'].append('https://scholar.google.co.uk/citations?hl=en&user=' + gsID)
+    entry_list['Web URL'].append('https://scholar.google.co.uk/citations?hl=en&user=' + gsID)
     entry_list['Affiliation'].append(affiliations)
     entry_list['Interests'].append(interests)
     entry_list['Citations'].append(citations)
@@ -93,7 +93,7 @@ def get_next_link_2(ORGID, next_link, page_index):
 st.set_page_config(layout='wide')
 
 st.markdown('''
-# Scholar App 📚
+# Scholar App 
 This App retrieves researcher citation data from ***Google Scholar***.
 ''')
 
@@ -109,7 +109,7 @@ org_list = {'Pfizer':'2173004527418493312',
             'Amgen':'6577310867458702644',
             "Abbott Laboratories":"12347773627327339907"}
 
-orgid = st.sidebar.selectbox('Select an Insitution', 
+orgid = st.sidebar.selectbox('Select an Institution', 
                               ('Pfizer', 
                               'AbbVie Inc', 
                               'Johnson & Johnson Co.',
